@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
 
@@ -26,17 +26,17 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.findAll());
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<BookResponse> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.findById(id));
     }
 
-    @PatchMapping("/id")
+    @PatchMapping("/{id}")
     public ResponseEntity<BookResponse> update(@PathVariable("id") Long id, @RequestBody BookRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.update(id, request));
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         bookService.delete((id));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
