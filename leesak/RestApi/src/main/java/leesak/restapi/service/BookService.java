@@ -4,7 +4,6 @@ import leesak.restapi.domain.Book;
 import leesak.restapi.dto.BookRequest;
 import leesak.restapi.dto.BookResponse;
 import leesak.restapi.repository.BookRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public BookResponse create(BookRequest request) {
-        Book book = new Book(null, request.getName(), request.getPrice(), request.getCategory());
+        Book book = new Book(null, request.name(), request.price(), request.category());
         return new BookResponse(bookRepository.save(book));
     }
 
@@ -28,20 +27,20 @@ public class BookService {
 
     public BookResponse findById(Long id) {
         return new BookResponse(bookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 학생입니다.")));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다.")));
     }
 
     public BookResponse update(Long id, BookRequest request) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 학생입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
 
-        book.update(request.getName(), request.getPrice(), request.getCategory());
+        book.update(request.name(), request.price(), request.category());
         return new BookResponse(book);
     }
 
     public void delete(Long id) {
         if (!bookRepository.delete(id)) {
-            throw new IllegalArgumentException("존재하지 않는 학생입니다.");
+            throw new IllegalArgumentException("존재하지 않는 책입니다.");
         }
     }
 }
